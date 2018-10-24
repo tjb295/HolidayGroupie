@@ -11,5 +11,7 @@ namespace HolidayGroupie.Models
         public string Name { get; set; }
         public DateTime Date { get; set; }
         public string Location { get; set; }
+        public int[] Items { get; set; }
+        public int[] Attendees { get; set; }
     }
 }

@@ -5,11 +5,11 @@ using System.Web;
 
 namespace HolidayGroupie.Models
 {
-    public class Friend
+    public class Item
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int[] Events { get; set; }
-        public int[] Friends { get; set; }
+        public int Bringer { get; set; }
+        public int EventId { get; set; }
     }
 }

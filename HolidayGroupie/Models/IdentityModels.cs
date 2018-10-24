@@ -18,8 +18,11 @@ namespace HolidayGroupie.Models
         }
     }
 
+    //gateway to the db
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Friend> Friends { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
