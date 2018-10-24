@@ -206,6 +206,34 @@
     <Compile Include="Migrations\201810242153578_InitialModel.Designer.cs">
       <DependentUpon>201810242153578_InitialModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810242214500_AddItemsAndAttendees.cs" />
+    <Compile Include="Migrations\201810242214500_AddItemsAndAttendees.Designer.cs">
+      <DependentUpon>201810242214500_AddItemsAndAttendees.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810242222019_InitialMigration.cs" />
+    <Compile Include="Migrations\201810242222019_InitialMigration.Designer.cs">
+      <DependentUpon>201810242222019_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810242229576_TestForFriendMigrate.cs" />
+    <Compile Include="Migrations\201810242229576_TestForFriendMigrate.Designer.cs">
+      <DependentUpon>201810242229576_TestForFriendMigrate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810242235406_FriendMigrationAddingAttendeesList.cs" />
+    <Compile Include="Migrations\201810242235406_FriendMigrationAddingAttendeesList.Designer.cs">
+      <DependentUpon>201810242235406_FriendMigrationAddingAttendeesList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810242305263_PopulateMembershipType.cs" />
+    <Compile Include="Migrations\201810242305263_PopulateMembershipType.Designer.cs">
+      <DependentUpon>201810242305263_PopulateMembershipType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810242318263_ApplyAnnotationsToFriendName.cs" />
+    <Compile Include="Migrations\201810242318263_ApplyAnnotationsToFriendName.Designer.cs">
+      <DependentUpon>201810242318263_ApplyAnnotationsToFriendName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810242330028_PopulateMembershipTypesAgain.cs" />
+    <Compile Include="Migrations\201810242330028_PopulateMembershipTypesAgain.Designer.cs">
+      <DependentUpon>201810242330028_PopulateMembershipTypesAgain.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Event.cs" />
@@ -300,6 +328,27 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201810242153578_InitialModel.resx">
       <DependentUpon>201810242153578_InitialModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810242214500_AddItemsAndAttendees.resx">
+      <DependentUpon>201810242214500_AddItemsAndAttendees.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810242222019_InitialMigration.resx">
+      <DependentUpon>201810242222019_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810242229576_TestForFriendMigrate.resx">
+      <DependentUpon>201810242229576_TestForFriendMigrate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810242235406_FriendMigrationAddingAttendeesList.resx">
+      <DependentUpon>201810242235406_FriendMigrationAddingAttendeesList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810242305263_PopulateMembershipType.resx">
+      <DependentUpon>201810242305263_PopulateMembershipType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810242318263_ApplyAnnotationsToFriendName.resx">
+      <DependentUpon>201810242318263_ApplyAnnotationsToFriendName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810242330028_PopulateMembershipTypesAgain.resx">
+      <DependentUpon>201810242330028_PopulateMembershipTypesAgain.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
