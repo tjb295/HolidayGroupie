@@ -1,0 +1,28 @@
+﻿@model IEnumerable<HolidayGroupie.Models.Event>
+@{
+    ViewBag.Title = "Events";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Events</h2>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Event</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var myEvent in Model)
+        {
+            <tr>
+                <td>
+                    @myEvent.Date
+                </td>
+                <td>
+                    @myEvent.Name
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

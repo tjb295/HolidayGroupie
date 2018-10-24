@@ -1,0 +1,29 @@
+﻿@model IEnumerable<HolidayGroupie.Models.Friend>
+@{
+    ViewBag.Title = "Friends";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Friends</h2>
+@if (!Model.Any())
+{
+    <p>You have not added any friends yet</p>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Friend</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var friend in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(friend.Name, "Details", new { id = friend.Id }, null)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
