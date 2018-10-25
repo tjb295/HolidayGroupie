@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using HolidayGroupie.Models;
+using HolidayGroupie.Dtos;
+using AutoMapper;
 
 namespace HolidayGroupie.Controllers.Api
 {
@@ -18,40 +20,44 @@ namespace HolidayGroupie.Controllers.Api
         }
 
         // Get /api/friends
-        public IEnumerable<Friend> GetFriends()
+        public IEnumerable<FriendDto> GetFriends()
         {
-            return _context.Friends.ToList();
+            //specify mapping what to what
+            return _context.Friends.ToList().Select(Mapper.Map<Friend, FriendDto>);
         }
 
         // GET /api/friends/1
-        public Friend GetFriend(int id)
+        public IHttpActionResult GetFriend(int id)
         {
             var friend = _context.Friends.SingleOrDefault(f => f.Id == id);
 
             if (friend == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return NotFound();
             }
 
-            return friend;
+            return Ok(Mapper.Map<Friend, FriendDto>(friend));
         }
 
         // POST /api/friends
         [HttpPost]
-        public Friend CreateFriend(Friend friend)
+        public IHttpActionResult CreateFriend(FriendDto friendDto)
         {
             if (!ModelState.IsValid)
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return BadRequest();
 
+            var friend = Mapper.Map<FriendDto, Friend>(friendDto);
             _context.Friends.Add(friend);
             _context.SaveChanges();
 
-            return friend;
+            friendDto.Id = friend.Id;
+
+            return Created(new Uri(Request.RequestUri + "/" + friend.Id), friendDto);
         }
 
         // PUT /api/friends/1
         [HttpPut]
-        public void UpdateFriend(int id, Friend friend)
+        public void UpdateFriend(int id, FriendDto friendDto)
         {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -63,10 +69,8 @@ namespace HolidayGroupie.Controllers.Api
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
-            friendInDb.Name = friend.Name;
-            friendInDb.Email = friend.Email;
-            friendInDb.LastName = friend.LastName;
-            friendInDb.MembershipTypeId = friend.MembershipTypeId;
+            //source and targt in parameters so do not need to define type
+            Mapper.Map(friendDto, friendInDb);
 
             _context.SaveChanges();
 
