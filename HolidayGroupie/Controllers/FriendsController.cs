@@ -9,16 +9,32 @@ namespace HolidayGroupie.Controllers
 {
     public class FriendsController : Controller
     {
+        public ApplicationDbContext _context;
+
+        public FriendsController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
+        }
+
         // GET: Friends
         public ActionResult Index()
         {
-            var friends = GetFriends();
+            //when this line is executed thi is deffered
+            //execution
+            //
+            var friends = _context.Friends.ToList();
+
             return View(friends);
         }
 
         public ActionResult Details(int id)
         {
-            var friend = GetFriends().SingleOrDefault(f => f.Id == id);
+            var friend = _context.Friends.SingleOrDefault(f => f.Id == id);
 
             if (friend == null)
             {

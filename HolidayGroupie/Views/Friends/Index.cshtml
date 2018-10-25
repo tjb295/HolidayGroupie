@@ -21,7 +21,7 @@ else
             @foreach (var friend in Model)
             {
                 <tr>
-                    <td>@Html.ActionLink(friend.Name, "Details", new { id = friend.Id }, null)</td>
+                    <td>@Html.ActionLink(friend.Name + " " + friend.LastName, "Details", new { id = friend.Id }, null)</td>
                 </tr>
             }
         </tbody>
