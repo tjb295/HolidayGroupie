@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using HolidayGroupie.Models;
+using HolidayGroupie.ViewModels;
 using System.Data.Entity;
 
 namespace HolidayGroupie.Controllers
@@ -43,6 +44,28 @@ namespace HolidayGroupie.Controllers
             }
 
             return View(friend);
+        }
+
+        public ActionResult New()
+        {
+            var membershipTypes = _context.MembershipType.ToList();
+            var viewModel = new NewFriendViewModel
+            {
+                MembershipTypes = membershipTypes
+            };
+
+            return View(viewModel);
+        }
+        //makes sure only a post request can reach this
+        //below is model binding
+        [HttpPost]
+        public ActionResult Create(Friend friend)
+        {
+            _context.Friends.Add(friend);
+            //this is only in memory, so we need to add more
+            //to persist changes we call context.saveChanges
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Friends");
         }
 
         public IEnumerable<Friend> GetFriends()

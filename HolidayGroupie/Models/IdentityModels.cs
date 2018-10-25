@@ -24,6 +24,7 @@ namespace HolidayGroupie.Models
         public DbSet<Friend> Friends { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Item> Items { get; set; }
+        public DbSet<MembershipType> MembershipType { get; set; }
         
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

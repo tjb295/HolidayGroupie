@@ -9,14 +9,24 @@ namespace HolidayGroupie.Models
     public class Friend
     {
         public int Id { get; set; }
+
         [Required]
         [StringLength(255)]
+        [Display(Name = "First Name")]
         public string Name { get; set; }
+
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
+
         public Event UpcomingEvent { get; set; }
+
         public MembershipType MembershipType { get; set; }
+
+        [Display(Name = "Membership Type")]
         public byte MembershipTypeId { get; set; }
+
         public List<Event> Events { get; set; }
+
         public List<Friend> Friends { get; set; }
     }
 }
