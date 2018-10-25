@@ -9,19 +9,20 @@
     <thead>
         <tr>
             <th>Event</th>
+            <th>Date</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var myEvent in Model)
         {
-            <tr>
-                <td>
-                    @myEvent.Date
-                </td>
-                <td>
-                    @myEvent.Name
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.ActionLink(myEvent.Name, "Details", new { id = myEvent.Id }, null)
+            </td>
+            <td>
+                @myEvent.Date
+            </td>
+        </tr>
         }
     </tbody>
 </table>

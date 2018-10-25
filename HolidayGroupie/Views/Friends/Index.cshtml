@@ -15,6 +15,8 @@ else
         <thead>
             <tr>
                 <th>Friend</th>
+                <th>Upcoming Event</th>
+                <th> Membership Type</th>
             </tr>
         </thead>
         <tbody>
@@ -22,6 +24,8 @@ else
             {
                 <tr>
                     <td>@Html.ActionLink(friend.Name + " " + friend.LastName, "Details", new { id = friend.Id }, null)</td>
+                    <td><p>@friend.UpcomingEvent.Name</p></td>
+                    <td><p>@friend.MembershipType.Name</p></td>
                 </tr>
             }
         </tbody>

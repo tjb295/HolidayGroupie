@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using HolidayGroupie.Models;
+using System.Data.Entity;
 
 namespace HolidayGroupie.Controllers
 {
@@ -27,8 +28,8 @@ namespace HolidayGroupie.Controllers
             //when this line is executed thi is deffered
             //execution
             //
-            var friends = _context.Friends.ToList();
-
+            var friends = _context.Friends.Include(f => f.MembershipType).Include(f => f.UpcomingEvent).ToList();
+            
             return View(friends);
         }
 

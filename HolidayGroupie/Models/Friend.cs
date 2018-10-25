@@ -13,6 +13,9 @@ namespace HolidayGroupie.Models
         [StringLength(255)]
         public string Name { get; set; }
         public string LastName { get; set; }
+        public Event UpcomingEvent { get; set; }
+        public MembershipType MembershipType { get; set; }
+        public byte MembershipTypeId { get; set; }
         public List<Event> Events { get; set; }
         public List<Friend> Friends { get; set; }
     }
