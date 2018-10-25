@@ -59,13 +59,58 @@ namespace HolidayGroupie.Controllers
         //makes sure only a post request can reach this
         //below is model binding
         [HttpPost]
-        public ActionResult Create(Friend friend)
+        public ActionResult Save(Friend friend)
         {
-            _context.Friends.Add(friend);
+            if (friend.Id == 0)
+            {
+                _context.Friends.Add(friend);
+            }
+            else
+            {
+                var friendInDb = _context.Friends.Single(f => f.Id == friend.Id);
+
+                //controllers have a method call try update model
+                //TryUpdateModel(friendInDb);
+                //but this can open up security holes in app
+                //do not blindly read request data
+                friendInDb.Name = friend.Name;
+                friendInDb.LastName = friend.LastName;
+                friendInDb.MembershipTypeId = friend.MembershipTypeId;
+                //could also use mapper
+                //Mapper.map(friend, friendInDb)
+            }
+            
             //this is only in memory, so we need to add more
             //to persist changes we call context.saveChanges
             _context.SaveChanges();
             return RedirectToAction("Index", "Friends");
+        }
+
+        public ActionResult Delete(int id)
+        {
+            var friend = _context.Friends.SingleOrDefault(f => f.Id == id);
+            _context.Friends.Remove(friend);
+            _context.SaveChanges();
+            return View("Index");
+        }
+
+        public ActionResult Edit(int id)
+        {
+            var friend = _context.Friends.SingleOrDefault(f => f.Id == id);
+
+            if (friend == null)
+            {
+                return HttpNotFound();
+            }
+
+            var viewModel = new NewFriendViewModel
+            {
+                Friend = friend,
+                MembershipTypes = _context.MembershipType.ToList()
+            };
+
+            //specify view name to take to
+            return View("New", viewModel);
         }
 
         public IEnumerable<Friend> GetFriends()

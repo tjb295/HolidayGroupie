@@ -5,4 +5,10 @@
 }
 
 <h2>@Model.Name @Model.LastName</h2>
+<button class="btn btn-outline-success">
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+</button>
+<button class="btn btn-outline-danger">
+    @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+</button>
 
