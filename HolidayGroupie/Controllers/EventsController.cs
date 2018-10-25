@@ -42,6 +42,36 @@ namespace HolidayGroupie.Controllers
             return View(myEvent);
         }
 
+        public ActionResult EventForm()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Save(Event myEvent)
+        {
+       
+
+            if (myEvent.Id == 0)
+            {
+                _context.Events.Add(myEvent);
+            }
+            else
+            {
+                var eventInDb = _context.Events.Single(f => f.Id == myEvent.Id);
+
+                //controllers have a method call try update model
+                //TryUpdateModel(friendInDb);
+                //but this can open up security holes in app
+                //do not blindly read request data
+                eventInDb.Name = myEvent.Name;
+                eventInDb.Description = myEvent.Description;
+            }
+
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Events");
+        }
+
         private IEnumerable<Event> GetEvents()
         {
             return new List<Event>
