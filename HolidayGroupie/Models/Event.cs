@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -12,7 +13,7 @@ namespace HolidayGroupie.Models
         public string Description { get; set; }
         public Friend OrganizerId { get; set; }
 
-
+        [Display(Name = "When")]
         public DateTime? Date { get; set; }
         public string Location { get; set; }
         public List<Item> Items { get; set; }
