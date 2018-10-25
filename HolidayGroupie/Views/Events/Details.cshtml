@@ -6,7 +6,10 @@
 
 <h2>@Model.Name</h2>
 <h3>At @Model.Location</h3>
-<h3> Organized by @Model.OrganizerId.Name</h3>
+@if (@Model.OrganizerId!= null)
+{
+    <h3> Organized by @Model.OrganizerId.Name</h3>
+}
 <p>Description: @Model.Description</p>
 
 

@@ -44,12 +44,17 @@ namespace HolidayGroupie.Controllers
 
         public ActionResult EventForm()
         {
-            return View();
+            Event myEvent = new Event();
+            return View(myEvent);
         }
 
         [HttpPost]
         public ActionResult Save(Event myEvent)
         {
+            if(!ModelState.IsValid)
+            {
+                return View("EventForm", myEvent);
+            }
        
 
             if (myEvent.Id == 0)
