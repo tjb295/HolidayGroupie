@@ -51,6 +51,7 @@ namespace HolidayGroupie.Controllers
             var membershipTypes = _context.MembershipType.ToList();
             var viewModel = new NewFriendViewModel
             {
+                Friend = new Friend(),
                 MembershipTypes = membershipTypes
             };
 
@@ -74,6 +75,7 @@ namespace HolidayGroupie.Controllers
 
                 return View("New", viewModel);
             }
+
             if (friend.Id == 0)
             {
                 _context.Friends.Add(friend);
@@ -89,6 +91,7 @@ namespace HolidayGroupie.Controllers
                 friendInDb.Name = friend.Name;
                 friendInDb.LastName = friend.LastName;
                 friendInDb.MembershipTypeId = friend.MembershipTypeId;
+                friendInDb.Email = friend.Email;
                 //could also use mapper
                 //Mapper.map(friend, friendInDb)
             }

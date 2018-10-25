@@ -26,6 +26,10 @@ namespace HolidayGroupie.Models
         [Display(Name = "Membership Type")]
         public byte MembershipTypeId { get; set; }
 
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
         public List<Event> Events { get; set; }
 
         public List<Friend> Friends { get; set; }
