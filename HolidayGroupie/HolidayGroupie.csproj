@@ -274,6 +274,10 @@
     <Compile Include="Migrations\201810251544254_NullableDateTime.Designer.cs">
       <DependentUpon>201810251544254_NullableDateTime.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201810251854088_AddingRequiredToLastName.cs" />
+    <Compile Include="Migrations\201810251854088_AddingRequiredToLastName.Designer.cs">
+      <DependentUpon>201810251854088_AddingRequiredToLastName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Event.cs" />
@@ -424,6 +428,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201810251544254_NullableDateTime.resx">
       <DependentUpon>201810251544254_NullableDateTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810251854088_AddingRequiredToLastName.resx">
+      <DependentUpon>201810251854088_AddingRequiredToLastName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

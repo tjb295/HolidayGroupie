@@ -24,7 +24,7 @@ namespace HolidayGroupie
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-minty.css",
-                      "~/Content/site.css"));
+                      "~/Content/Site.css"));
         }
     }
 }

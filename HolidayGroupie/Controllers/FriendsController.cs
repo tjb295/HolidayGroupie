@@ -61,6 +61,19 @@ namespace HolidayGroupie.Controllers
         [HttpPost]
         public ActionResult Save(Friend friend)
         {
+            //we1 can use model state property to get validation data
+            if (!ModelState.IsValid)
+            {
+                //redirect user back to form if not
+                //3 steps for valiation
+                var viewModel = new NewFriendViewModel
+                {
+                    Friend = friend,
+                    MembershipTypes = _context.MembershipType.ToList()
+                };
+
+                return View("New", viewModel);
+            }
             if (friend.Id == 0)
             {
                 _context.Friends.Add(friend);
