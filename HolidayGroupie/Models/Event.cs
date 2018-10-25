@@ -16,9 +16,11 @@ namespace HolidayGroupie.Models
         public string Description { get; set; }
         public Friend OrganizerId { get; set; }
 
+        [Required]
         [Display(Name = "When")]
         public DateTime? Date { get; set; }
 
+        [Required]
         [Display(Name ="Where")]
         public string Location { get; set; }
 

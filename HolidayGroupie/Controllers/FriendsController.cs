@@ -60,6 +60,7 @@ namespace HolidayGroupie.Controllers
         //makes sure only a post request can reach this
         //below is model binding
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Friend friend)
         {
             //we1 can use model state property to get validation data
