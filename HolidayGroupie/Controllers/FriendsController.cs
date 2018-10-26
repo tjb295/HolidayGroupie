@@ -108,6 +108,7 @@ namespace HolidayGroupie.Controllers
             var friend = _context.Friends.SingleOrDefault(f => f.Id == id);
             _context.Friends.Remove(friend);
             _context.SaveChanges();
+
             return View("Index");
         }
 
