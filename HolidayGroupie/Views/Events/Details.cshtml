@@ -4,12 +4,33 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@Model.Name</h2>
+<h1>@Model.Name</h1>
+<h2>On @Model.Date</h2>
 <h3>At @Model.Location</h3>
 @if (@Model.OrganizerId!= null)
 {
     <h3> Organized by @Model.OrganizerId.Name</h3>
 }
 <p>Description: @Model.Description</p>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <h3>Who's coming?</h3>
+        <ul>
+            <li></li>
+        </ul>
+        <button style=" border-radius: 10px" class="btn btn-outline-success">
+            Invite Friends
+        </button>
+    </div>
+    <div class="col-md-4">
+        <h3>What to bring</h3>
+        <button class="btn-block btn-outline-success">Add Items</button>
+    </div>
+    <div class="col-md-4">
+        <h3>What will the weather be like?</h3>
+    </div>
+</div>
 
 

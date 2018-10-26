@@ -11,6 +11,9 @@
 }
 else
 {
+    <button style=" border-radius: 10px" class="btn btn-outline-success">
+        @Html.ActionLink("Add Friend", "New", "Friends", null)
+    </button>
     <table id="friends" class="table table-bordered table-hover">
         <thead>
             <tr>
@@ -22,35 +25,32 @@ else
         <tbody>
             @foreach (var friend in Model)
             {
-            <tr>
-                <td>@Html.ActionLink(friend.Name + " " + friend.LastName, "Details", new { id = friend.Id }, null)</td>
-                @if (friend.UpcomingEvent != null)
-                {
-                    <td><p>@Html.ActionLink(friend.UpcomingEvent.Name, "Details", "Events", new { id = friend.UpcomingEvent.Id }, null)</p></td>
-                }
-                else
-                {
-                    <td><p>No events scheduled</p></td>
-                }
-                <td>
-                    <button data-friend-id="@friend.Id" class="btn btn-outline-danger js-delete">Delete</button>
-                </td>
-            </tr>
+                <tr>
+                    <td>@Html.ActionLink(friend.Name + " " + friend.LastName, "Details", new { id = friend.Id }, null)</td>
+                    @if (friend.UpcomingEvent != null)
+                    {
+                        <td><p>@Html.ActionLink(friend.UpcomingEvent.Name, "Details", "Events", new { id = friend.UpcomingEvent.Id }, null)</p></td>
+                    }
+                    else
+                    {
+                        <td><p>No events scheduled</p></td>
+                    }
+                    <td>
+                        <button data-friend-id="@friend.Id" class="btn btn-outline-danger js-delete">Delete</button>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
 }
-<div class="fixed-bottom" style="margin: 50px; bottom: 50px; left: 80%; float: right;width:20%; height: 20%;">
-    <button style=" border-radius: 10px"class="btn btn-outline-success">
-        @Html.ActionLink("Add Friend", "New", "Friends", null)
-    </button>
-</div>
+
 
 @section scripts
 {
     <script>
         $(document).ready(function () {
-            $('#friends .js-delete').on("click", function () {
+            $('#friends').DataTable();
+            $('#friends').on("click", '.js-delete', function () {
                 var button = $(this);
 
 
@@ -65,5 +65,5 @@ else
                 };
             });
         });
-    </script>      
+    </script>
 }
