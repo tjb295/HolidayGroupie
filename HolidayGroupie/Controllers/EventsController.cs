@@ -60,7 +60,6 @@ namespace HolidayGroupie.Controllers
             if (myEvent.Id == 0)
             {
                 myEvent.OrganizerId = _context.Friends.Find(1);
-                myEvent.Location = "Mississippi";
 
                 _context.Events.Add(myEvent);
             }

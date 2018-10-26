@@ -14,6 +14,8 @@ namespace HolidayGroupie.App_Start
         {
             Mapper.CreateMap<Friend, FriendDto>();
             Mapper.CreateMap<FriendDto, Friend>();
+            Mapper.CreateMap<Event, EventDto>();
+            Mapper.CreateMap<EventDto, Event>();
         }
     }
 }

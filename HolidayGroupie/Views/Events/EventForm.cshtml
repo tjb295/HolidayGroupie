@@ -31,9 +31,11 @@
     </div>
     <div class="form-group">
         @Html.LabelFor(e => e.Location)
-        @Html.HiddenFor(e => e.Location)
+        
         <div id="map"></div>
-        <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+        @Html.TextAreaFor(e => e.Location, new { @class = "controls" })
+        @Html.ValidationMessageFor(e => e.Location)
+        
         <div id="map"></div>
         <script>
             // This example adds a search box to a map, using the Google Place Autocomplete
@@ -52,7 +54,7 @@
                 });
 
                 // Create the search box and link it to the UI element.
-                var input = document.getElementById('pac-input');
+                var input = document.getElementById('Location');
                 var searchBox = new google.maps.places.SearchBox(input);
                 map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
@@ -116,6 +118,7 @@
 &callback=initAutocomplete&libraries=places"
                 async defer></script>
     </div>
+    @Html.HiddenFor(e => e.Id)
     
     <input type="submit" class="btn btn-primary" value="Save">
 }
