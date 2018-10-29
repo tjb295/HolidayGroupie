@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using HolidayGroupie.Models;
 using System.Data.Entity;
+using HolidayGroupie.ViewModels;
 
 namespace HolidayGroupie.Controllers
 {
@@ -33,13 +34,29 @@ namespace HolidayGroupie.Controllers
         public ActionResult Details(int id)
         {
             var myEvent = _context.Events.Include(e => e.OrganizerId).SingleOrDefault(e => e.Id == id);
+            var itemsInEvent = _context.Items.Join(_context.Events,
+                                i => i.EventId,
+                                e => e.Id,
+                                (i, e) => new { i, e })
+                                .Where(ie => ie.e.Id == id && ie.i.EventId == id)
+                                .Select(ie => ie.i).ToList();
+
+            var eventViewModel = new EventItemViewModel
+            {
+                Event = myEvent,
+                Item = new Item(),
+                Items = itemsInEvent,
+                Friends = myEvent.Attendees,
+                SearchableFriends = _context.Friends.ToList()
+
+            };
 
             if (myEvent == null)
             {
                 return HttpNotFound();
             }
 
-            return View(myEvent);
+            return View(eventViewModel);
         }
 
         public ActionResult EventForm()
@@ -47,6 +64,7 @@ namespace HolidayGroupie.Controllers
             Event myEvent = new Event();
             return View(myEvent);
         }
+
 
         [HttpPost]
         public ActionResult Save(Event myEvent)

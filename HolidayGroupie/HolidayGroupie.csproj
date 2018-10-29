@@ -211,6 +211,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\EventController.cs" />
     <Compile Include="Controllers\Api\FriendController.cs" />
+    <Compile Include="Controllers\Api\FriendToEventController.cs" />
     <Compile Include="Controllers\EventsController.cs" />
     <Compile Include="Controllers\FriendsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -318,6 +319,7 @@
     <Compile Include="Models\MembershipType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\EventItemViewModel.cs" />
     <Compile Include="ViewModels\NewFriendViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

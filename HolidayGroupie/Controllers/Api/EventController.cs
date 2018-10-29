@@ -11,6 +11,7 @@ using HolidayGroupie.App_Start;
 
 namespace HolidayGroupie.Controllers.Api
 {
+    [RoutePrefix("api/event")]
     public class EventController : ApiController
     {
         private ApplicationDbContext _context;
@@ -56,27 +57,52 @@ namespace HolidayGroupie.Controllers.Api
 
 
         // PUT /api/event/1
+        //[HttpPut]
+        //public IHttpActionResult UpdateEvent(int id, EventDto eventDto)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    var eventInDb = _context.Events.SingleOrDefault(e => e.Id == id);
+
+        //    if (eventInDb == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    Mapper.Map(eventDto, eventInDb);
+
+        //    _context.SaveChanges();
+
+        //    return Ok();
+        //}
+
         [HttpPut]
-        public IHttpActionResult UpdateEvent(int id, EventDto eventDto)
+        [Route("AddFriendToEvent/{eventId}/{friendId}")]
+        public IHttpActionResult AddFriendToEvent(int eventId, int friendId)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            var eventInDb = _context.Events.SingleOrDefault(e => e.Id == id);
-
-            if (eventInDb == null)
+            //we need to take these two id's and add some other object
+            var myEvent = _context.Events.SingleOrDefault(e => e.Id == eventId);
+            if(myEvent == null)
             {
                 return NotFound();
             }
 
-            Mapper.Map(eventDto, eventInDb);
+            var friend = _context.Friends.SingleOrDefault(f => f.Id == friendId);
+            if (friend == null)
+            {
+                return NotFound();
+            }
+
+            //now that we have them add this friend to the events table
+            myEvent.Attendees.Add(friend);
 
             _context.SaveChanges();
-
             return Ok();
         }
+
 
         // DELETE /api/event/1
         public IHttpActionResult DeleteEvent(int id)

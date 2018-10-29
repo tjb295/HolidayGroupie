@@ -1,35 +1,135 @@
-﻿@model HolidayGroupie.Models.Event
+﻿@model HolidayGroupie.ViewModels.EventItemViewModel
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@Model.Name</h1>
-<h2>On @Model.Date</h2>
-<h3>At @Model.Location</h3>
-@if (@Model.OrganizerId!= null)
+<h1>@Model.Event.Name</h1>
+<h2>On @Model.Event.Date</h2>
+<h3>At @Model.Event.Location</h3>
+@if (@Model.Event.OrganizerId != null)
 {
-    <h3> Organized by @Model.OrganizerId.Name</h3>
+    <h3> Organized by @Model.Event.OrganizerId.Name</h3>
 }
-<p>Description: @Model.Description</p>
+<p>Description: @Model.Event.Description</p>
 
 
 <div class="row">
     <div class="col-md-4">
         <h3>Who's coming?</h3>
-        <ul>
-        </ul>
-        <button style=" border-radius: 10px" class="btn btn-outline-success">
+        @if (Model.Friends == null)
+        {
+            <h5>No Friends Attending Yet</h5>
+        }
+        else
+        {
+            <ul id="added_friends">
+            @foreach (var friend in Model.Friends)
+            {
+                <li>@friend.Name</li>
+            }
+             </ul>
+        }
+        <button data-toggle="modal" data-target="#friend-search-modal"style=" border-radius: 10px" class="btn btn-outline-success">
             Invite Friends
         </button>
     </div>
     <div class="col-md-4">
         <h3>What to bring</h3>
-        <button class="btn-block btn-outline-success">Add Items</button>
+        <button data-toggle="modal" data-target="#item-form-modal" class="btn-block btn-outline-success">Add Items</button>
     </div>
     <div class="col-md-4">
         <h3>What will the weather be like?</h3>
     </div>
 </div>
+<!--Friend Add Modal-->
+<div class="modal in" id="friend-search-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Search your Friends</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="friend-table" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Friend</th>
+                            <th>Add</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var friend in Model.SearchableFriends)
+                        {
+                            <tr>
+                                <td>@friend.Name</td>
+                                <td><button data-friend-id="@friend.Id" ddata-friend-name="@friend.Name" class="btn btn-primary js_add_friend" >Add</button></td>
+                            </tr>
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Item Form Modal -->
+<div class="modal in" id="item-form-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Items to Bring</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Save", "Items"))
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(e => e.Item.Name)
+                        @Html.TextBoxFor(e => e.Item.Name, new { @class="form-control" })
+                    </div>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--JQuery script for operations in adding items-->
+@section scripts
+{
+    <script>
+        //I need to make an api to do item operations
+        $(document).ready(function () {
+            $('#friend-table').DataTable({
+                "pageLength": 5
+            });
+            $("#friend-table").on("click", " .js_add_friend", function () {
+                $.ajax({
+                    url: "/api/event/AddFriendToEvent/" + @Model.Event.Id  + "/" + $(this).attr('data-friend-id'),
+                    method: "PUT",
+                    success: function () {
+                        var toAdd = $("<li></li>").text($(this).attr("data-friend-name"));
+                        $('#added_friends').append(toAdd);
+                        $(this).text("Added!");
+                    }
+                })
+
+                
+            });
+        });
+    </script>    
+}
 
 

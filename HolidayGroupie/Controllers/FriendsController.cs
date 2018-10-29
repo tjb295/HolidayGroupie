@@ -49,6 +49,7 @@ namespace HolidayGroupie.Controllers
         public ActionResult New()
         {
             var membershipTypes = _context.MembershipType.ToList();
+            
             var viewModel = new NewFriendViewModel
             {
                 Friend = new Friend(),
