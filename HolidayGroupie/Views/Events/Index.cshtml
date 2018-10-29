@@ -6,25 +6,57 @@
 
 <h2>Events</h2>
 @Html.ActionLink("Create Event", "EventForm", "Events", null, new { @class ="btn btn-outline-success" })
-<table class="table table-bordered table-hover">
+@if (!Model.Any()) {
+    <p>You have no events planned yet</p>
+}
+else
+{
+<table id="events" class="table table-bordered table-hover">
     <thead>
         <tr>
             <th>Event</th>
             <th>Date</th>
+            <th>Cancel Event</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var myEvent in Model)
         {
-        <tr>
-            <td>
-                @Html.ActionLink(myEvent.Name, "Details", new { id = myEvent.Id }, null)
-            </td>
-            <td>
-                @myEvent.Date
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.ActionLink(myEvent.Name, "Details", new { id = myEvent.Id }, null)
+                </td>
+                <td>
+                    @myEvent.Date
+                </td>
+                <td>
+                    <button data-event-id="@myEvent.Id" class="btn btn-outline-danger js-delete">Cancel</button>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
+}
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#events').DataTable();
+            $('#events').on("click", '.js-delete', function () {
+                var button = $(this);
+
+                if (confirm("Are you sure you want to cancel this event?")) {
+                    $.ajax({
+                        url: '/api/event/' + button.attr("data-event-id"),
+                        method: "DELETE",
+                        success: function () {
+                            button.parents("tr").remove();
+                        }
+                    });
+                };
+            });
+        });
+    </script>
+}
 
