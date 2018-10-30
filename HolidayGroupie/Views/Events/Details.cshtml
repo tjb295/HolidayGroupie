@@ -113,7 +113,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
@@ -126,7 +125,8 @@
         //I need to make an api to do item operations
         $(document).ready(function () {
             $('#friend-table').DataTable({
-                "pageLength": 5
+                "pageLength": 5,
+                "bLengthChange": false
             });
 
             $('#item-form').on("click", " .js_add_item", function () {

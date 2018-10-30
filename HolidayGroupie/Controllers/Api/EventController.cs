@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -143,13 +144,23 @@ namespace HolidayGroupie.Controllers.Api
         // DELETE /api/event/1
         public IHttpActionResult DeleteEvent(int id)
         {
-            var eventInDb = _context.Events.SingleOrDefault(e => e.Id == id);
+            var eventInDb = _context.Events.Include(e => e.Items).Include(e => e.Attendees).SingleOrDefault(e => e.Id == id);
 
             if (eventInDb == null)
                 return NotFound();
 
-            _context.Events.Remove(eventInDb);
-            _context.SaveChanges();
+            try
+            {
+
+                _context.Events.Remove(eventInDb);
+                _context.SaveChanges();
+
+            }
+            catch(Exception e)
+            {
+                return Content(HttpStatusCode.BadRequest, e.InnerException.InnerException.Message);
+            }
+            
 
             return Ok();
             
