@@ -37,6 +37,12 @@
     <div class="col-md-4">
         <h3>What to bring</h3>
         <button data-toggle="modal" data-target="#item-form-modal" class="btn-block btn-outline-success">Add Items</button>
+        <ul id="item-display-list">
+            @foreach(var item in Model.Items)
+            {
+                <li>@item.Name</li>
+            }
+        </ul>
     </div>
     <div class="col-md-4">
         <h3>What will the weather be like?</h3>
@@ -63,10 +69,18 @@
                     <tbody>
                         @foreach(var friend in Model.SearchableFriends)
                         {
-                            <tr>
-                                <td>@friend.Name</td>
-                                <td><button data-friend-id="@friend.Id" data-friend-name="@friend.Name" class="btn btn-primary js_add_friend" >Add</button></td>
-                            </tr>
+                        <tr>
+                            <td>@friend.Name</td>
+                            @if (!Model.Friends.Any(f => f.Id == friend.Id))
+                            {
+                                <td><button data-friend-id="@friend.Id" data-friend-name="@friend.Name" class="btn btn-primary js_add_friend">Add</button></td>
+                            }
+                            else
+                            {
+                                <td><button class="btn btn-primary">Added!</button> </td>
+                            }
+
+                        </tr>
 
                         }
                     </tbody>
@@ -89,14 +103,13 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                @using (Html.BeginForm("Save", "Items"))
-                {
+            <div id="item-form" class="modal-body">
+
                     <div class="form-group">
-                        @Html.LabelFor(e => e.Item.Name)
-                        @Html.TextBoxFor(e => e.Item.Name, new { @class="form-control" })
+                       <input id="item-form-box" type="text" placeholder="Write an Item"  class="form-control"/>
                     </div>
-                }
+                    <button type="submit" class="btn btn-primary js_add_item">Add Item</button>
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -115,6 +128,19 @@
             $('#friend-table').DataTable({
                 "pageLength": 5
             });
+
+            $('#item-form').on("click", " .js_add_item", function () {
+                $.ajax({
+                    url: "/api/event/AddItemToEvent/" + @Model.Event.Id + "/" + $('#item-form-box').val(),
+                    method: "PUT",
+                    success: function () {
+                        var toAdd = $("<li></li>").text( $('#item-form-box').val() );
+                        $('#item-display-list').append(toAdd);
+                        $('#item-form-box').val('');
+                    }
+                });
+            });
+
             $("#friend-table").on("click", " .js_add_friend", function () {
                 $.ajax({
                     url: "/api/event/AddFriendToEvent/" + @Model.Event.Id + "/" + $(this).attr("data-friend-id"),
@@ -123,10 +149,10 @@
                 });
                 var toAdd = $("<li></li>").text($(this).attr("data-friend-name"));
                 $('#added_friends').append(toAdd);
-                $(this).text("Added!");
-
-                
+                $(this).text("Added!"); 
             });
+
+
         });
     </script>    
 }

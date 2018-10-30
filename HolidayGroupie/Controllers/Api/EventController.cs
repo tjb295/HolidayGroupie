@@ -78,6 +78,29 @@ namespace HolidayGroupie.Controllers.Api
 
         //    return Ok();
         //}
+        [HttpPut]
+        [Route("AddItemToEvent/{eventId}/{itemName}")]
+        public IHttpActionResult AddItemToEvent(int eventId, string itemName)
+        {
+            Event myEvent = _context.Events.SingleOrDefault(e => e.Id == eventId);
+            if(myEvent == null)
+            {
+                return BadRequest();
+            }
+
+            Item item = new Item
+            {
+                Name = itemName,
+                Event = myEvent,
+                EventId = myEvent.Id
+            };
+
+            myEvent.Items.Add(item);
+
+            _context.SaveChanges();
+
+            return Ok();
+        }
 
         [HttpPut]
         [Route("AddFriendToEvent/{eventId}/{friendId}")]
