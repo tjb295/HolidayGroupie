@@ -5,8 +5,8 @@
 }
 
 <h1>@Model.Event.Name</h1>
-<h2>On @Model.Event.Date</h2>
-<h3>At @Model.Event.Location</h3>
+<h2 id="date-time">On @Model.Event.Date</h2>
+<h3 id="location">@Model.Event.Location</h3>
 @if (@Model.Event.OrganizerId != null)
 {
     <h3> Organized by @Model.Event.OrganizerId.Name</h3>
@@ -129,16 +129,47 @@
                 "pageLength": 5,
                 "bLengthChange": false
             });
+            var long;
+            var lat;
+            var date = $('#date-time').text().split(' ');
+            console.log(date);
+            var reverseDate = date[1].split('/');
+            console.log(reverseDate);
+            var newDate = [];
+            newDate.push(reverseDate[2]);
+            newDate.push(reverseDate[0]);
+            newDate.push(reverseDate[1]);
+            var properDate = newDate.join('-');
+            console.log(properDate);
+
+            //start work wit the getting latt and long
+            //for events
+            var address = $('#location').text();
+            address = address.split(' ');
+            console.log(address);
+            address = address.join('+');
+
             $.ajax({
-                url: "https://api.darksky.net/forecast/e892ab43807febdad60517e6741bc675/37.8267,-122.4233",
+                url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyDnkN1brLK8B3EzToGV7axWtsgYMhqkMSA",
+                method: "GET",
+                crossDomain: true,
+                dataType: 'jsonp',
+                success: function (response) {
+                    long = response.results[0].geometry.location.lng;
+                    lat = response.results[0].geometry.location.lat;
+                }
+            });
+
+            $.ajax({
+                url: "https://api.darksky.net/forecast/e892ab43807febdad60517e6741bc675/" + lat + "," + long + "," + properDate + "T12:00:00",
                 method: "GET",
                 crossDomain: true,
                 dataType: 'jsonp',
                 success: function (response) {
                     $("#weather-info").children("h4").text(response.hourly.summary);
                 }
-                
-            })
+
+            });
 
             $('#item-form').on("click", " .js_add_item", function () {
                 $.ajax({
@@ -165,7 +196,10 @@
 
 
         });
-    </script>    
+    </script>  
+    <script>
+
+    </script>
 }
 
 
