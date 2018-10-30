@@ -84,20 +84,33 @@ namespace HolidayGroupie.Controllers.Api
         public IHttpActionResult AddFriendToEvent(int eventId, int friendId)
         {
             //we need to take these two id's and add some other object
-            var myEvent = _context.Events.SingleOrDefault(e => e.Id == eventId);
+            Event myEvent = _context.Events.SingleOrDefault(e => e.Id == eventId);
             if(myEvent == null)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            var friend = _context.Friends.SingleOrDefault(f => f.Id == friendId);
+            Friend friend = _context.Friends.SingleOrDefault(f => f.Id == friendId);
             if (friend == null)
             {
-                return NotFound();
+                return BadRequest();
+            }
+            var attends = myEvent.Attendees;
+            if (attends == null)
+            {
+                return Content(HttpStatusCode.NotFound, "No attendees");
+            }
+            //now that we have them add this friend to the events table
+            try
+            {
+                myEvent.Attendees.Add(friend);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+                return Content(HttpStatusCode.BadRequest, e.Message + " "  + friend.Name + " " + myEvent.Name);
             }
 
-            //now that we have them add this friend to the events table
-            myEvent.Attendees.Add(friend);
 
             _context.SaveChanges();
             return Ok();

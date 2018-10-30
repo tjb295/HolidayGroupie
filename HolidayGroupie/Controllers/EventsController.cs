@@ -73,7 +73,9 @@ namespace HolidayGroupie.Controllers
             {
                 return View("EventForm", myEvent);
             }
-       
+
+            myEvent.Attendees = new List<Friend>();
+            myEvent.Items = new List<Item>();
 
             if (myEvent.Id == 0)
             {

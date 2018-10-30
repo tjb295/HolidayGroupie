@@ -24,7 +24,7 @@ namespace HolidayGroupie.Models
         [Display(Name ="Where")]
         public string Location { get; set; }
 
-        public List<Item> Items { get; set; }
-        public List<Friend> Attendees { get; set; }
+        public virtual List<Item> Items { get; set; }
+        public virtual List<Friend> Attendees { get; set; }
     }
 }

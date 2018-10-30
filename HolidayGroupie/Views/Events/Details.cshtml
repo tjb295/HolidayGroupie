@@ -65,7 +65,7 @@
                         {
                             <tr>
                                 <td>@friend.Name</td>
-                                <td><button data-friend-id="@friend.Id" ddata-friend-name="@friend.Name" class="btn btn-primary js_add_friend" >Add</button></td>
+                                <td><button data-friend-id="@friend.Id" data-friend-name="@friend.Name" class="btn btn-primary js_add_friend" >Add</button></td>
                             </tr>
 
                         }
@@ -117,14 +117,13 @@
             });
             $("#friend-table").on("click", " .js_add_friend", function () {
                 $.ajax({
-                    url: "/api/event/AddFriendToEvent/" + @Model.Event.Id  + "/" + $(this).attr('data-friend-id'),
+                    url: "/api/event/AddFriendToEvent/" + @Model.Event.Id + "/" + $(this).attr("data-friend-id"),
                     method: "PUT",
-                    success: function () {
-                        var toAdd = $("<li></li>").text($(this).attr("data-friend-name"));
-                        $('#added_friends').append(toAdd);
-                        $(this).text("Added!");
-                    }
-                })
+                 
+                });
+                var toAdd = $("<li></li>").text($(this).attr("data-friend-name"));
+                $('#added_friends').append(toAdd);
+                $(this).text("Added!");
 
                 
             });
