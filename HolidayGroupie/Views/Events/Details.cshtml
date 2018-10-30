@@ -153,23 +153,27 @@
                 url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyDnkN1brLK8B3EzToGV7axWtsgYMhqkMSA",
                 method: "GET",
                 crossDomain: true,
-                dataType: 'jsonp',
+                dataType: 'json',
                 success: function (response) {
+                    //return lat and long from address lookup
                     long = response.results[0].geometry.location.lng;
                     lat = response.results[0].geometry.location.lat;
+
+                    //api call to darksky to get weather information
+                    $.ajax({
+                        url: "https://api.darksky.net/forecast/e892ab43807febdad60517e6741bc675/" + lat + "," + long + "," + properDate + "T12:00:00",
+                        method: "GET",
+                        crossDomain: true,
+                        dataType: 'jsonp',
+                        success: function (response) {
+                            $("#weather-info").children("h4").text(response.hourly.summary);
+                        }
+
+                    });
                 }
             });
 
-            $.ajax({
-                url: "https://api.darksky.net/forecast/e892ab43807febdad60517e6741bc675/" + lat + "," + long + "," + properDate + "T12:00:00",
-                method: "GET",
-                crossDomain: true,
-                dataType: 'jsonp',
-                success: function (response) {
-                    $("#weather-info").children("h4").text(response.hourly.summary);
-                }
-
-            });
+            
 
             $('#item-form').on("click", " .js_add_item", function () {
                 $.ajax({
