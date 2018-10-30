@@ -44,8 +44,9 @@
             }
         </ul>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4" id="weather-info">
         <h3>What will the weather be like?</h3>
+        <h4 id="weather-summary"> </h4>
     </div>
 </div>
 <!--Friend Add Modal-->
@@ -128,6 +129,16 @@
                 "pageLength": 5,
                 "bLengthChange": false
             });
+            $.ajax({
+                url: "https://api.darksky.net/forecast/e892ab43807febdad60517e6741bc675/37.8267,-122.4233",
+                method: "GET",
+                crossDomain: true,
+                dataType: 'jsonp',
+                success: function (response) {
+                    $("#weather-info").children("h4").text(response.hourly.summary);
+                }
+                
+            })
 
             $('#item-form').on("click", " .js_add_item", function () {
                 $.ajax({
