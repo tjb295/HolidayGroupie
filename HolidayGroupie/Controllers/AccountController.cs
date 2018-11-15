@@ -387,7 +387,6 @@ namespace HolidayGroupie.Controllers
 
         //
         // POST: /Account/LogOff
-        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {

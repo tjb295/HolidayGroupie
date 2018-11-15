@@ -23,30 +23,53 @@
         }
         else
         {
-            <ul id="added_friends">
-            @foreach (var friend in Model.Friends)
-            {
-                <li>@friend.Name</li>
-            }
-             </ul>
+
+            <ul class="fa-ul" id="added_friends">
+                @foreach (var friend in Model.Friends)
+                {
+                    <li><i class="fas fa-envelope-square"></i>@friend.Name</li>
+                }
+            </ul>
         }
-        <button data-toggle="modal" data-target="#friend-search-modal"style=" border-radius: 10px" class="btn btn-outline-success">
+        <button data-toggle="modal" data-target="#friend-search-modal" style=" border-radius: 10px" class="btn btn-outline-success">
             Invite Friends
         </button>
     </div>
     <div class="col-md-4">
         <h3>What to bring</h3>
         <button data-toggle="modal" data-target="#item-form-modal" class="btn-block btn-outline-success">Add Items</button>
-        <ul id="item-display-list">
-            @foreach(var item in Model.Items)
+        <ul id="item-display-list" class="fa-ul">
+            @foreach (var item in Model.Items)
             {
-                <li>@item.Name</li>
+            <li><i class="fas fa-shopping-bag"></i>
+
+                <h4>@item.Name</h4>
+                @if (item.Bringer != null)
+                {
+                    
+
+                    <h3>Brought by @item.Bringer</h3>
+
+
+                }
+                
+                <div class="form-group">
+                    <select class="custom-select">
+                        <option selected disabled>Assign a Friend</option>
+                        @foreach (var friend in Model.Event.Attendees)
+                        {
+                            <option>@friend.Name</option>
+                        }
+                    </select>
+                </div>
+            </li>
             }
         </ul>
     </div>
     <div class="col-md-4" id="weather-info">
         <h3>What will the weather be like?</h3>
         <h4 id="weather-summary"> </h4>
+        <h5></h5>
     </div>
 </div>
 <!--Friend Add Modal-->
@@ -68,20 +91,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(var friend in Model.SearchableFriends)
+                        @foreach (var friend in Model.SearchableFriends)
                         {
-                        <tr>
-                            <td>@friend.Name</td>
-                            @if (!Model.Friends.Any(f => f.Id == friend.Id))
-                            {
-                                <td><button data-friend-id="@friend.Id" data-friend-name="@friend.Name" class="btn btn-primary js_add_friend">Add</button></td>
-                            }
-                            else
-                            {
-                                <td><button class="btn btn-primary">Added!</button> </td>
-                            }
+                            <tr>
+                                <td>@friend.Name</td>
+                                @if (!Model.Friends.Any(f => f.Id == friend.Id))
+                                {
+                                    <td><button data-friend-id="@friend.Id" data-friend-name="@friend.Name" class="btn btn-primary js_add_friend">Add</button></td>
+                                }
+                                else
+                                {
+                                    <td><button class="btn btn-primary">Added!</button> </td>
+                                }
 
-                        </tr>
+                            </tr>
 
                         }
                     </tbody>
@@ -106,11 +129,11 @@
             </div>
             <div id="item-form" class="modal-body">
 
-                    <div class="form-group">
-                       <input id="item-form-box" type="text" placeholder="Write an Item"  class="form-control"/>
-                    </div>
-                    <button type="submit" class="btn btn-primary js_add_item">Add Item</button>
-                
+                <div class="form-group">
+                    <input id="item-form-box" type="text" placeholder="Write an Item" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary js_add_item">Add Item</button>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -122,9 +145,15 @@
 <!--JQuery script for operations in adding items-->
 @section scripts
 {
+    
+
+
     <script>
         //I need to make an api to do item operations
         $(document).ready(function () {
+
+            dragula([document.querySelector('#added_friends'), document.querySelector('#item-display-list')]);
+
             $('#friend-table').DataTable({
                 "pageLength": 5,
                 "bLengthChange": false
@@ -134,19 +163,16 @@
             var date = $('#date-time').text().split(' ');
             console.log(date);
             var reverseDate = date[1].split('/');
-            console.log(reverseDate);
             var newDate = [];
             newDate.push(reverseDate[2]);
             newDate.push(reverseDate[0]);
             newDate.push(reverseDate[1]);
             var properDate = newDate.join('-');
-            console.log(properDate);
 
             //start work wit the getting latt and long
             //for events
             var address = $('#location').text();
             address = address.split(' ');
-            console.log(address);
             address = address.join('+');
 
             $.ajax({
@@ -167,20 +193,23 @@
                         dataType: 'jsonp',
                         success: function (response) {
                             $("#weather-info").children("h4").text(response.hourly.summary);
+                            $("#weather-info").children("h5").text("It will be " + response.hourly.data[0].temperature.toFixed(2) + "9\xB0 F");
                         }
 
                     });
                 }
             });
 
-            
+
 
             $('#item-form').on("click", " .js_add_item", function () {
                 $.ajax({
                     url: "/api/event/AddItemToEvent/" + @Model.Event.Id + "/" + $('#item-form-box').val(),
                     method: "PUT",
                     success: function () {
-                        var toAdd = $("<li></li>").text( $('#item-form-box').val() );
+                        var toAdd = $("<li></li>").append($("<h4></h4>").text($('#item-form-box').val()));
+                        toAdd.prepend($("<i></i>").addClass("fas fa-shopping-bag"));
+                        toAdd.attr("id", "item-display-list-item");
                         $('#item-display-list').append(toAdd);
                         $('#item-form-box').val('');
                     }
@@ -191,16 +220,18 @@
                 $.ajax({
                     url: "/api/event/AddFriendToEvent/" + @Model.Event.Id + "/" + $(this).attr("data-friend-id"),
                     method: "PUT",
-                 
+
                 });
                 var toAdd = $("<li></li>").text($(this).attr("data-friend-name"));
+                var icon = $("<i></i>").addClass("fas fa-envelope-square");
+                toAdd.prepend(icon);
                 $('#added_friends').append(toAdd);
-                $(this).text("Added!"); 
+                $(this).text("Added!");
             });
 
 
         });
-    </script>  
+    </script>
     <script>
 
     </script>

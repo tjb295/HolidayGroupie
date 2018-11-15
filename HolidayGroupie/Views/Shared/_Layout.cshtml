@@ -3,93 +3,100 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Groupify</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+
+    @Scripts.Render("~/bundles/jquery")
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/jquery")
+
     <style>
-         /* Always set the map height explicitly to define the size of the div
+        /* Always set the map height explicitly to define the size of the div
         * element that contains the map. */
-         #map {
-             height: 200px;
-             width: 70%;
-         }
+        #map {
+            height: 200px;
+            width: 70%;
+        }
 
-         #description {
-             font-family: Roboto;
-             font-size: 15px;
-             font-weight: 300;
-         }
+        #description {
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+        }
 
-         #infowindow-content .title {
-             font-weight: bold;
-         }
+        #infowindow-content .title {
+            font-weight: bold;
+        }
 
-         #infowindow-content {
-             display: none;
-         }
+        #infowindow-content {
+            display: none;
+        }
 
-         #map #infowindow-content {
-             display: inline;
-         }
+        #map #infowindow-content {
+            display: inline;
+        }
 
-         .pac-card {
-             margin: 10px 10px 0 0;
-             border-radius: 2px 0 0 2px;
-             box-sizing: border-box;
-             -moz-box-sizing: border-box;
-             outline: none;
-             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-             background-color: #fff;
-             font-family: Roboto;
-         }
+        .pac-card {
+            margin: 10px 10px 0 0;
+            border-radius: 2px 0 0 2px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            outline: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            background-color: #fff;
+            font-family: Roboto;
+        }
 
-         #pac-container {
-             padding-bottom: 12px;
-             margin-right: 12px;
-         }
+        #pac-container {
+            padding-bottom: 12px;
+            margin-right: 12px;
+        }
 
-         .pac-controls {
-             display: inline-block;
-             padding: 5px 11px;
-         }
+        .pac-controls {
+            display: inline-block;
+            padding: 5px 11px;
+        }
 
-             .pac-controls label {
-                 font-family: Roboto;
-                 font-size: 13px;
-                 font-weight: 300;
-             }
+            .pac-controls label {
+                font-family: Roboto;
+                font-size: 13px;
+                font-weight: 300;
+            }
 
-         #pac-input {
-             background-color: #fff;
-             font-family: Roboto;
-             font-size: 15px;
-             font-weight: 300;
-             margin-left: 12px;
-             padding: 0 11px 0 13px;
-             text-overflow: ellipsis;
-             width: 400px;
-         }
+        #pac-input {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            margin-left: 12px;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 400px;
+        }
 
-             #pac-input:focus {
-                 border-color: #4d90fe;
-             }
+            #pac-input:focus {
+                border-color: #4d90fe;
+            }
 
-         #title {
-             color: #fff;
-             background-color: #4d90fe;
-             font-size: 25px;
-             font-weight: 500;
-             padding: 6px 12px;
-         }
+        #title {
+            color: #fff;
+            background-color: #4d90fe;
+            font-size: 25px;
+            font-weight: 500;
+            padding: 6px 12px;
+        }
 
-         #target {
-             width: 345px;
-         }
+        #target {
+            width: 345px;
+        }
     </style>
 
 </head>
 <body style="padding-top: 70px">
+    <!--CDN for Dragula -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.2/dragula.js'></script>
     @Html.Partial("_NavBar")
     <div class="container body-content">
         @RenderBody()
@@ -99,7 +106,7 @@
         </footer>
     </div>
 
-    
+
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

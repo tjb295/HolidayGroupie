@@ -1,0 +1,43 @@
+﻿@model HolidayGroupie.Models.User
+@{
+    ViewBag.Title = "RegistrationView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Sign Up</h2>
+@using (Html.BeginForm("Create", "Users"))
+{
+    <div class="form-group">
+        @Html.LabelFor(u => u.Email)
+        @Html.TextBoxFor(u => u.Email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(u => u.Email)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(u => u.Password)
+        @Html.TextBoxFor(u => u.Password, new { @class = "form-control", @id="password", @type="password" })
+        @Html.ValidationMessageFor(u => u.Password)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(u => u.PasswordCheck)
+        @Html.TextBoxFor(u => u.PasswordCheck, new { @class = "form-control", @type="password"})
+        @Html.ValidationMessageFor(u => u.PasswordCheck)
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+}
+
+@section scripts
+{
+
+    <script>
+        $(document).ready(function () {
+
+            if ($('#passwordCheck').val() != $('#password').val() ) {
+                $('#password').focus();
+                $('#pw-error').css("display", "block");
+                $('#')
+                
+
+            }
+        })
+    </script>
+}

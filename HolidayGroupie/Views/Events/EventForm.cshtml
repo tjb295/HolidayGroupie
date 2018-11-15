@@ -127,6 +127,7 @@
         $(document).ready(function () {
             $('#Date').datetimepicker({
                 format: "YYYY/MM/DD"
+
             }).on('dp.change', function (e) {
                 $(this).data("DateTimePicker").hide();
             });

@@ -14,24 +14,35 @@
             Ever planned a potluck or camping trip where the responsibility for who shoud bring what was heinously organized?
             Groupify makes it easy to plan events and delegate who is bringing what items!
         </p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            Create an account, add friends to plan with and get going!
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Login</h2>
-        
-    </div>
-    <div class="col-md-4">
-        <h2>Register</h2>
-        
-    </div>
+
+    @if (!System.Web.HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        <div class="col-md-4">
+            <h2>Getting started</h2>
+            <p>
+                Create an account, add friends to plan with and get going!
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h2>@Html.ActionLink("Login", "Login", "Account", null, null)</h2>
+
+        </div>
+        <div class="col-md-4">
+            <h2>@Html.ActionLink("Register", "Register", "Account", null, null)</h2>
+
+        </div>
+    }
+    else
+    {
+        <div class="col-md-4">
+            <h2>View your events</h2>
+            <h2>@Html.ActionLink("Events", "Index", "Events", null, null)</h2>
+        </div>
+    }
+
 </div>

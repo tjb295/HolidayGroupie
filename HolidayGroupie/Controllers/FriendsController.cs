@@ -92,7 +92,6 @@ namespace HolidayGroupie.Controllers
                 //do not blindly read request data
                 friendInDb.Name = friend.Name;
                 friendInDb.LastName = friend.LastName;
-                friendInDb.MembershipTypeId = friend.MembershipTypeId;
                 friendInDb.Email = friend.Email;
                 //could also use mapper
                 //Mapper.map(friend, friendInDb)

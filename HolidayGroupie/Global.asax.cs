@@ -8,6 +8,7 @@ using System.Web.Routing;
 using System.Web.Http;
 using AutoMapper;
 using HolidayGroupie.App_Start;
+using System.Data.Entity.Migrations;
 
 namespace HolidayGroupie
 {
@@ -21,6 +22,7 @@ namespace HolidayGroupie
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+      
         }
     }
 }
